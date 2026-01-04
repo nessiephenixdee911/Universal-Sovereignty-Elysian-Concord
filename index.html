@@ -3,28 +3,35 @@
 <head>
 <title>Universal Sovereignty Elysian Concord</title>
 <style>
-body {background:url('https://media.istockphoto.com/id/1488351398/photo/brass-scale-illuminated-by-yellow-and-blue-lights-on-black-background.jpg?s=612x612&w=0&k=20&c=M-RyMi8rZfV0fVfAcA_z6-JvSEcLoz47oSn-Lwtwo5M=') center/cover no-repeat fixed; color:#0f0; font-family:monospace; padding:2rem; line-height:1.6; max-width:900px; margin:auto}
-h1, h2 {text-align:center}
-#summary {font-size:1.5rem; text-align:center; margin:2rem}
-#votingBox {background:rgba(0,20,0,0.8); padding:2rem; border:2px solid #0f0; border-radius:10px; max-width:500px; margin:3rem auto}
-input, button {font-size:1.2rem; padding:0.7rem; margin:0.5rem; width:90%}
-button {background:#0f0; color:#000; font-weight:bold}
-#status {font-size:1.5rem; margin:1rem 0}
-pre {text-align:left; background:#111; padding:2rem; margin:2rem 0; white-space:pre-wrap; border:1px solid #0f0}
+body {background:url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80') center/cover fixed; color:#ff0; font-family:monospace; padding:2rem; line-height:1.8; max-width:900px; margin:auto}
+h1 {font-size:3.5rem; text-align:center; text-shadow:0 0 15px #0f0}
+h2 {font-size:2.5rem; text-align:center; color:#0ff; text-shadow:0 0 10px #00f}
+#contact {background:rgba(0,30,0,0.9); padding:1rem; border:2px solid #0f0; text-align:center; font-size:1.5rem; margin:2rem auto; max-width:600px; box-shadow:0 0 20px #0f0}
+#summary {font-size:1.8rem; text-align:center; margin:3rem; font-weight:bold}
+#votingBox {background:rgba(0,30,0,0.9); padding:2rem; border:4px solid #0f0; border-radius:15px; max-width:500px; margin:3rem auto; box-shadow:0 0 20px #0f0}
+input, button {font-size:1.4rem; padding:1rem; margin:0.7rem; width:90%; border:2px solid #0f0; background:#000; color:#ff0}
+button {background:#0f0; color:#000; font-weight:bold; cursor:pointer; box-shadow:0 0 10px #0f0}
+#status {font-size:1.8rem; margin:2rem 0; font-weight:bold}
+#tally {font-size:2.2rem; margin:2rem 0; text-align:center; font-weight:bold}
+#ledgerLink {font-size:1.2rem; text-align:center; margin:1rem}
 a {color:#0ff}
-#tally {font-size:1.8rem; text-align:center; margin:2rem 0}
-#ledgerLink {font-size:1rem; text-align:center; margin:1rem}
+pre {text-align:left; background:#111; padding:2rem; margin:2rem 0; white-space:pre-wrap; border:2px solid #0f0; box-shadow:0 0 15px #0f0}
+#legal {background:rgba(0,20,0,0.8); padding:2rem; margin:3rem 0; border:2px solid #ff0; box-shadow:0 0 15px #ff0}
 </style>
 </head>
 <body>
 <h1>UNIVERSAL SOVEREIGNTY ELYSIAN CONCORD</h1>
 
+<div id="contact">
+<strong>Contact:</strong> nessiephenixdee911@proton.me | 1-506-724-8572 (Canadian)
+</div>
+
 <p id="summary">
-The Universal Sovereignty Elysian Concord is the global movement to end all governments and replace them with self-governance under one law: Do No Harm. When 51% majority is reached in required divisions, borders, taxes, prisons, and wars end forever. Councils rise. Human rights are absolute. Vote now to make humanity free.
+The Universal Sovereignty Elysian Concord is the global movement to end all governments and replace them with self-governance under one law: Do No Harm — our natural law rights written at the beginning of time in God's holy scriptures. When 51% majority is reached in required divisions (at least half the provinces/states/territories of a nation vote YES), borders, taxes, prisons, and wars end forever. Councils rise. Human rights are absolute. Vote now to make humanity free.
 </p>
 
 <div id="votingBox">
-<h2>Vote for Universal Human Rights to Govern Ourselves</h2>
+<h2>Vote for Universal Human Rights to Be Our Own Governmental System to Govern Yourself</h2>
 <input type="text" id="name" placeholder="Exact name on your government ID"><br>
 <input type="file" id="idFile" accept="image/*,application/pdf"><br>
 <button onclick="verifyID()">Verify ID with Grok →</button>
@@ -40,7 +47,17 @@ The Universal Sovereignty Elysian Concord is the global movement to end all gove
 <div id="ledgerLink"><a href="ledger.html">View full live ledger</a></div>
 </div>
 
-<h2>Full Doctrine</h2>
+<h2>How This Site Works – Legal Explanation</h2>
+<div id="legal">
+<p><strong>Verification</strong>: Grok AI (xAI vision model) checks your uploaded ID photo/PDF is a real government-issued document (passport, driver's license, national ID) and the name matches exactly. The full ID is encrypted and stored in Supabase for legal audit purposes only — restricted to court-ordered access. No photo is public.</p>
+<p><strong>Voting</strong>: One vote per real ID forever. Vote is sent to Supabase database (free, permanent storage).</p>
+<p><strong>Storage</strong>: Votes are stored centrally in Supabase PostgreSQL (free tier handles billions). No personal info — only choice, timestamp, and proof hash.</p>
+<p><strong>Privacy</strong>: No names, photos, or personal data stored publicly. Only you know your vote. Full ID encrypted for legal audit only.</p>
+<p><strong>Ledger</strong>: Public read-only view of all votes (choice + timestamp + proof). Anyone can verify the tally.</p>
+<p><strong>Legal Note</strong>: This is a sovereign constituent power exercise. Votes are permanent and auditable. Activation at 51% majority in required divisions triggers the charter.</p>
+</div>
+
+<h2>Universal Sovereignty Elysian Concord – Global Peace Charter</h2>
 <pre>** UNIVERSAL SOVEREIGNTY ELYSIAN CONCORD! **
 ** GLOBAL PEACE CHARTER ** **BREAKING: ITS VOTING TIME!**
 One law: Do NO harm. Love.
@@ -189,7 +206,7 @@ These are mandatory upon activation; violation constitutes harm triggering immed
 **Article VI: Universal Governance – Sacred Healing Councils**
 Sacred Healing Councils replace every parliament, court, bureaucracy, and tribunal. One council per community, neighborhood, or block—open to every adult and child, chosen by lot or direct vote, rotate every year, and instant recall. Decisions by simple majority or consensus; everything live-streamed and blockchain vote recorded. No more permanent politicians, parties, or elites. Global Council links every local council—same rules, same transparency. No separate indigenous, immigrant, veteran, disability, or ANY governments—ONE LAW, ONE PEOPLE. Flat, rotating structure, crushes corruption; all decisions transparent, auditable 24/7 via blockchain.
 Councils handle every sector: family protections universal (kinship/reunification for all); human rights tribunals cover every infringement (discrimination, abuse, rights violations) without limits; environmental stewardship (pollution/harm = treason against life); every human stewards Earth as kin as his own family and being.
-Integration of all traditions (harmony with land, non-discrimination, family reunification, refugee sanctuary, economic contribution) adapted universally—no exclusive rule, no silos, no exploitation, no elite filters.
+Integration of all traditions ( harmony with land, non-discrimination, family reunification, refugee sanctuary, economic contribution) adapted universally—no exclusive rule, no silos, no exploitation, no elite filters.
 One unified dominion ends division. Kids sit at the table when sacred councils speak—age is irrelevant; if a five-year-old says they are hurt, investigations are same-day, same hour, act expediently—no dismissal, no too young excuse; immediate action. A child's single disclosure of harm triggers immediate investigation and protective measures.
 Integrated safeguards: All interventions documented, reviewable by councils, append-only records, no punishment motive.
 **Article VII: Universal Human Rights – Iron-Clad, Irrevocable from Birth**
