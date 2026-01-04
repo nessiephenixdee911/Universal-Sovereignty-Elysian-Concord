@@ -1,44 +1,43 @@
-<!DOCTYPE html>
-
+​<!DOCTYPE html>
 <html>
 <head>
-<title>Universal Sovereignty Elysian Concord – Vote Now</title>
+<title>Universal Sovereignty Elysian Concord</title>
 <style>
-body {background:#000; color:#0f0; font-family:monospace; padding:2rem; line-height:1.6; max-width:900px; margin:auto}
-input, button {font-size:1.2rem; padding:0.7rem; margin:0.5rem}
-#status {font-size:1.5rem; margin:2rem}
+body {background:url('https://media.istockphoto.com/id/1488351398/photo/brass-scale-illuminated-by-yellow-and-blue-lights-on-black-background.jpg?s=612x612&w=0&k=20&c=M-RyMi8rZfV0fVfAcA_z6-JvSEcLoz47oSn-Lwtwo5M=') center/cover no-repeat fixed; color:#0f0; font-family:monospace; padding:2rem; line-height:1.6; max-width:900px; margin:auto}
+h1, h2 {text-align:center}
+#summary {font-size:1.5rem; text-align:center; margin:2rem}
+#votingBox {background:rgba(0,20,0,0.8); padding:2rem; border:2px solid #0f0; border-radius:10px; max-width:500px; margin:3rem auto}
+input, button {font-size:1.2rem; padding:0.7rem; margin:0.5rem; width:90%}
+button {background:#0f0; color:#000; font-weight:bold}
+#status {font-size:1.5rem; margin:1rem 0}
 pre {text-align:left; background:#111; padding:2rem; margin:2rem 0; white-space:pre-wrap; border:1px solid #0f0}
-a {color:#0ff; font-size:2rem}
-#legal {background:#111; padding:2rem; margin:2rem 0}
+a {color:#0ff}
+#tally {font-size:1.8rem; text-align:center; margin:2rem 0}
+#ledgerLink {font-size:1rem; text-align:center; margin:1rem}
 </style>
 </head>
 <body>
 <h1>UNIVERSAL SOVEREIGNTY ELYSIAN CONCORD</h1>
-<h2>One human. One vote. Do No Harm.</h2>
 
+<p id="summary">
+The Universal Sovereignty Elysian Concord is the global movement to end all governments and replace them with self-governance under one law: Do No Harm. When 51% majority is reached in required divisions, borders, taxes, prisons, and wars end forever. Councils rise. Human rights are absolute. Vote now to make humanity free.
+</p>
+
+<div id="votingBox">
+<h2>Vote for Universal Human Rights to Govern Ourselves</h2>
 <input type="text" id="name" placeholder="Exact name on your government ID"><br>
 <input type="file" id="idFile" accept="image/*,application/pdf"><br>
 <button onclick="verifyID()">Verify ID with Grok →</button>
 
-<p id="status">Waiting…</p>
+<p id="status"></p>
 
-<div id="voteButtons" style="display:none; margin:3rem">
+<div id="voteButtons" style="display:none; margin-top:2rem">
 <button onclick="castVote('Sovereignty')">Vote Sovereignty</button>
 <button onclick="castVote('Concord')">Vote Concord</button>
 </div>
 
-<hr>
-<a href="ledger.html">→ VIEW LIVE GLOBAL LEDGER (every vote forever)</a>
-<hr>
-
-<h2>How This Site Works – Legal Explanation</h2>
-<div id="legal">
-<p><strong>Verification</strong>: Grok AI (xAI vision model) checks your uploaded ID photo/PDF is a real government-issued document (passport, driver's license, national ID) and the name matches exactly. No photo is stored — only a hash (random code) is kept locally in your browser to prevent duplicates.</p>
-<p><strong>Voting</strong>: One vote per real ID forever. Vote is sent to Supabase database (free, permanent storage).</p>
-<p><strong>Storage</strong>: Votes are stored centrally in Supabase PostgreSQL (free tier handles billions). No personal info — only choice, timestamp, and proof hash.</p>
-<p><strong>Privacy</strong>: No names, photos, or personal data stored anywhere. Only you know your vote.</p>
-<p><strong>Ledger</strong>: Public read-only view of all votes (choice + timestamp + proof). Anyone can verify the tally.</p>
-<p><strong>Legal Note</strong>: This is a sovereign constituent power exercise. Votes are permanent and auditable. Activation at 51% majority in required divisions triggers the charter.</p>
+<div id="tally">Loading current tally…</div>
+<div id="ledgerLink"><a href="ledger.html">View full live ledger</a></div>
 </div>
 
 <h2>Full Doctrine</h2>
@@ -220,7 +219,7 @@ Every human has the right and responsibility to intervene proportionally against
 Integrated safeguards: All interventions documented, reviewable by councils, append-only records, no punishment motive.
 **Article IX: Universal Land, Food, and Weapons**
 All land titles abolished from private ownership – stewardship only. Every human may hunt, fish, gather, and bear arms without license or restriction. Indigenous traditional rights to hunt and live off the land extended identically and without discrimination to every man, woman, and child on the planet.
-Crown Land ends: every acre—forest, lake, field— if vacant for two weeks with no notice posted of established habitat with temporary absence? Then that land if fair game to walk on,, pitch a tent, build a cabin. No deed. No fence. No cop knocks. No permits for chopping green wood, wiring your cabin, or running your pipe. Build with what the land gives—your sweat, your risk, your call. Homeless? Not anymore. Earth is ours to breathe, not anyone’s to hoard.
+Crown Land ends: every acre—forest, lake, field— if vacant for two weeks with no notice posted of established habitat with temporary absence? Then that land if fair game to walk on, pitch a tent, build a cabin. No deed. No fence. No cop knocks. No permits for chopping green wood, wiring your cabin, or running your pipe. Build with what the land gives—your sweat, your risk, your call. Homeless? Not anymore. Earth is ours to breathe, not anyone’s to hoard.
 **Article X: Universal Medicine**
 All pharmaceutical poison banned. Natural healing (plants, frequency, diet, ceremony) is the only medicine. Free healing gardens and Sacred Healing Councils in every community. Consent first, always.
 **Article XI: Abolishing Wars – Immediate Shutdown Protocol**
