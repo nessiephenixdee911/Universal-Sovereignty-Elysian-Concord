@@ -1,5 +1,4 @@
-const SUPABASE_URL = "https://auqzjncsxxleillfnpyh.supabase.co";
-
+​const SUPABASE_URL = "https://auqzjncsxxleillfnpyh.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_wKVt9PjkIrXGJPUezL57oQ_RM7V8Yl4";
 
 const GROK_KEY = "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";
