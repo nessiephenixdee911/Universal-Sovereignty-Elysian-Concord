@@ -28,8 +28,10 @@ async function verifyID() {
 
   if (answer !== "YES") return status("❌ Grok rejected – not real ID or name wrong");
 
-  const hash = await sha256(await file.arrayBuffer());
-  if (localStorage.getItem('voted_' + hash)) return status("Already voted");
+  const arrayBuffer = await file.arrayBuffer();
+  const hash = await sha256(arrayBuffer);
+
+  if (localStorage.getItem('voted_' + hash)) return status("Already voted with this ID");
 
   localStorage.setItem('voted_' + hash, 'true');
   localStorage.setItem('myhash', hash);
@@ -39,18 +41,24 @@ async function verifyID() {
 
 async function castVote(choice) {
   const hash = localStorage.getItem('myhash');
+  if (!hash) return status("Verify ID first");
+
   const vote = { choice, timestamp: new Date().toISOString(), proof: hash.slice(0,12) };
 
-  await fetch(`${SUPABASE_URL}/rest/v1/votes`, {
-    method: "POST",
-    headers: {
-      "apikey": SUPABASE_ANON_KEY,
-      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-      "Content-Type": "application/json",
-      "Prefer": "return=minimal"
-    },
-    body: JSON.stringify(vote)
-  });
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/votes`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify(vote)
+    });
+  } catch (e) {
+    console.error("Supabase error:", e);
+  }
 
   let local = JSON.parse(localStorage.getItem('localvotes') || '[]');
   local.push(vote);
