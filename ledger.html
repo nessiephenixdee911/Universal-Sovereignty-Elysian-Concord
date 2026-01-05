@@ -1,40 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Voting Ledger</title>
+  <title>Live Vote Ledger</title>
   <style>
-    body { 
-      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') top center / contain no-repeat fixed;
-      color: #e8f5e8; font-family: monospace; padding: 2rem; margin: 0; min-height: 100vh; 
-      text-shadow: 1px 1px 3px #000; box-sizing: border-box;
+    body {
+      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') center/cover fixed no-repeat;
+      background-color: rgba(0, 80, 0, 0.85);
+      color: #e8f5e8;
+      font-family: monospace;
+      padding: 2rem;
+      line-height: 1.8;
+      min-height: 100vh;
+      text-shadow: 1px 1px 3px #000;
     }
-    .box { background: rgba(0,100,0,0.6); padding: 1.5rem; margin: 2rem auto; max-width: 850px; border-radius: 15px; }
-    h1 { font-size: 2.8rem; color: #98fb98; text-shadow: 0 0 20px #228b22; text-align: center; }
-    p { margin: 0.6rem 0; font-size: 1.2rem; }
-    .vote-yes { color: #90ee90; }
-    .vote-no { color: #ff6347; }
+    h1 {
+      text-align: center;
+      font-size: 2.8rem;
+      color: #f0e68c;
+      text-shadow: 0 0 20px #228b22;
+    }
+    .box {
+      background: rgba(0, 100, 0, 0.6);
+      padding: 1.5rem;
+      border-radius: 20px;
+      margin: 2rem auto;
+      max-width: 850px;
+      box-shadow: 0 0 30px rgba(34,139,34,0.6);
+      border: 1px solid rgba(144,238,144,0.4);
+    }
+    a {
+      color: #90ee90;
+    }
+    p {
+      margin: 0.8rem 0;
+    }
   </style>
 </head>
 <body>
-
-  <h1>VOTE LEDGER</h1>
+  <h1>LIVE GLOBAL VOTE LEDGER – Immutable Forever</h1>
   <div class="box">
-    <a href="index.html" style="color:#90ee90;">← Vote</a>
+    <div style="text-align:center;"><a href="index.html">← Back to vote</a></div>
     <hr style="border-color:rgba(144,238,144,0.3);">
     <div id="list"></div>
   </div>
 
   <script>
-    const key = "sb_publishable_wKVt9PjkIrXGJPUezL57oQ_RM7V8Yl4";
-    fetch("https://auqzjncsxxleillfnpyh.supabase.co/rest/v1/votes?select=*")
-      .then(r => r.json())
-      .then(votes => {
-        document.getElementById("list").innerHTML = votes.map(v => `
-          <p>${v.name} – ${v.city}, ${v.province}, ${v.country} 
-             <span class="vote-${v.choice === 'Sovereignty' ? 'yes' : 'no'}">${v.choice}</span></p>`
-        ).join("");
-        if (!votes.length) document.getElementById("list").innerHTML = "<p>No votes yet.</p>";
+    const SUPABASE_URL = "https://auqzjncsxxleillfnpyh.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_wKVt9PjkIrXGJPUezL57oQ_RM7V8Yl4";
+
+    async function loadLedger() {
+      const resp = await fetch(`${SUPABASE_URL}/rest/v1/votes?select=name,city,province,country,choice,timestamp&order=timestamp.desc`, {
+        headers: { "apikey": SUPABASE_ANON_KEY }
       });
+      const votes = await resp.json();
+
+      const div = document.getElementById('list');
+      div.innerHTML = votes.map(v => `
+        <p><strong>${v.name}</strong> – ${v.city}, ${v.province}, ${v.country}<br>
+        Vote: <span style="color:${v.choice === 'Sovereignty' ? '#90ee90' : '#ff6347'}">${v.choice}</span> – ${new Date(v.timestamp).toLocaleString()}</p>
+      `).join('');
+
+      if (votes.length === 0) div.innerHTML = "<p style='text-align:center;'>No votes yet — be the first.</p>";
+    }
+
+    loadLedger();
+    setInterval(loadLedger, 10000);
   </script>
 </body>
 </html>
