@@ -4,8 +4,8 @@
   <title>Universal Sovereignty Elysian Concord</title>
   <style>
     body {
-      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') center/cover fixed no-repeat;
-      background-color: rgba(0, 80, 0, 0.85); /* Translucent royal green for areas outside the image */
+      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') top center / contain no-repeat fixed;
+      background-color: rgba(0, 80, 0, 0.85); /* Royal green translucent outside image */
       color: #e8f5e8;
       font-family: monospace;
       padding: 2rem;
@@ -30,7 +30,7 @@
       margin: 2rem 0;
     }
     .box {
-      background: rgba(0, 100, 0, 0.6); /* Royal green translucent blocks */
+      background: rgba(0, 100, 0, 0.6); /* Royal green translucent */
       padding: 1.8rem;
       border-radius: 20px;
       margin: 2rem auto;
@@ -40,17 +40,18 @@
       border: 1px solid rgba(144,238,144,0.4);
     }
     #votingBox {
-      max-width: 550px;
+      max-width: 600px;
     }
     input, button {
       font-size: 1.1rem;
       padding: 0.8rem;
-      margin: 0.6rem;
-      width: 92%;
+      margin: 0.6rem 0;
+      width: 100%;
       background: rgba(240,255,240,0.8);
       color: #006400;
       border: 1px solid #228b22;
       border-radius: 8px;
+      box-sizing: border-box;
     }
     button {
       background: linear-gradient(to bottom, #98fb98, #228b22);
@@ -64,6 +65,7 @@
       text-align: center;
       color: #90ee90;
       margin: 1.5rem 0;
+      min-height: 1.4rem;
     }
     #tally {
       font-size: 2rem;
@@ -104,19 +106,24 @@
   </p>
 
   <div id="votingBox" class="box">
-    <h2>Vote for Universal Human Rights to Govern Ourselves</h2>
+    <h2>Register Your Sovereign Vote</h2>
     <div class="note">
-      **Legal Verification Note:** You must take a picture of yourself holding your government-issued ID (face and document clearly visible together) as proof. This ensures your vote can be legally audited if needed to prove legitimacy.
+      **Legal Verification Required:** You must upload a clear photo of yourself holding your government-issued ID (face and full ID visible together). This ensures your vote can be audited for legitimacy if needed. Your data is encrypted and private.
     </div>
-    <input type="text" id="name" placeholder="Exact name on your government ID"><br>
-    <input type="file" id="idFile" accept="image/*,application/pdf"><br>
-    <button onclick="VOTE()">VOTE →</button>
+
+    <input type="text" id="name" placeholder="Full name (as on ID)">
+    <input type="text" id="city" placeholder="City / Town">
+    <input type="text" id="province" placeholder="Province / State / Territory">
+    <input type="text" id="country" placeholder="Nation / Country">
+    <input type="file" id="idFile" accept="image/*,application/pdf">
+
+    <button onclick="submitVote()">Submit & Register Vote</button>
 
     <p id="status"></p>
 
-    <div id="voteButtons" style="display:none; margin-top:2rem">
-      <button onclick="castVote('Sovereignty')">Vote Sovereignty</button>
-      <button onclick="castVote('Slavery')">Vote Slavery</button>
+    <div id="voteButtons" style="display:none;">
+      <button onclick="castVote('Sovereignty')">Vote Sovereignty (YES)</button>
+      <button onclick="castVote('Slavery')">Vote Slavery (NO)</button>
     </div>
 
     <div id="tally">
@@ -136,12 +143,12 @@
 
   <h2>How This Site Works – Legal Explanation</h2>
   <div class="box">
-    <p><strong>Verification</strong>: Grok AI (xAI vision model) checks your uploaded ID photo/PDF is a real government-issued document (passport, driver's license, national ID) and the name matches exactly. The full ID is encrypted and stored in Supabase for legal audit purposes only — restricted to court-ordered access. No photo is public.</p>
-    <p><strong>Voting</strong>: One vote per real ID forever. Vote is sent to Supabase database (free, permanent storage).</p>
-    <p><strong>Storage</strong>: Votes are stored centrally in Supabase PostgreSQL (free tier handles billions). No personal info — only choice, timestamp, and proof hash.</p>
-    <p><strong>Privacy</strong>: No names, photos, or personal data stored publicly. Only you know your vote. Full ID encrypted for legal audit only.</p>
-    <p><strong>Ledger</strong>: Public read-only view of all votes (choice + timestamp + proof). Anyone can verify the tally.</p>
-    <p><strong>Legal Note</strong>: This is a sovereign constituent power exercise. Votes are permanent and auditable. Activation at 51% majority in required divisions triggers the charter.</p>
+    <p><strong>Verification</strong>: You upload a photo of yourself holding your ID. This file is encrypted and stored in Supabase for legal audit only — restricted access. No photo is public.</p>
+    <p><strong>Voting</strong>: One vote per person. Your name, location, and ID photo are stored securely. Vote is permanent.</p>
+    <p><strong>Storage</strong>: All data in Supabase PostgreSQL — encrypted at rest. Only proof hash is public in ledger.</p>
+    <p><strong>Privacy</strong>: No personal info shown publicly. Only you know your vote. Full records protected.</p>
+    <p><strong>Ledger</strong>: Public tally and proof hashes. Anyone can verify count.</p>
+    <p><strong>Legal Note</strong>: This is a sovereign constituent power exercise. Activation at 51% majority in required divisions triggers the charter.</p>
   </div>
 
   <h2>Universal Sovereignty Elysian Concord – Global Peace Charter</h2>
