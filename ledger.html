@@ -1,115 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Live Vote Ledger</title>
+  <title>Voting Ledger</title>
   <style>
-    body {
-      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') center/cover fixed no-repeat;
-      color: #e8f5e8;
-      font-family: monospace;
-      padding: 2rem;
-      line-height: 1.8;
-      background-color: #001a00;
-      min-height: 100vh;
-      font-size: 1.1rem;
-      text-shadow: 1px 1px 3px #000;
+    body { 
+      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') top center / contain no-repeat fixed;
+      color: #e8f5e8; font-family: monospace; padding: 2rem; margin: 0; min-height: 100vh; 
+      text-shadow: 1px 1px 3px #000; box-sizing: border-box;
     }
-    h1 {
-      text-align: center;
-      font-size: 2.8rem;
-      color: #98fb98;
-      text-shadow: 0 0 20px #228b22;
-      margin: 2rem 0;
-    }
-    a {
-      color: #90ee90;
-      font-size: 1.3rem;
-      text-decoration: none;
-    }
-    a:hover {
-      text-shadow: 0 0 10px #228b22;
-    }
-    #tally {
-      font-size: 2.5rem;
-      text-align: center;
-      margin: 3rem auto;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      gap: 4rem;
-      flex-wrap: wrap;
-    }
-    #tally span {
-      background: rgba(0, 100, 0, 0.6); /* Royal green translucent */
-      padding: 1.2rem 2.5rem;
-      border-radius: 20px;
-      box-shadow: 0 0 25px rgba(34,139,34,0.8);
-      border: 1px solid rgba(144,238,144,0.5);
-      color: #e8f5e8;
-    }
-    #list {
-      max-width: 900px;
-      margin: 2rem auto;
-    }
-    #list p {
-      background: rgba(0, 100, 0, 0.5);
-      padding: 1rem;
-      margin: 0.8rem 0;
-      border-radius: 12px;
-      border-left: 5px solid #228b22;
-      box-shadow: 0 0 15px rgba(34,139,34,0.4);
-    }
-    hr {
-      border: 1px solid rgba(144,238,144,0.3);
-      margin: 2rem 0;
-    }
+    .box { background: rgba(0,100,0,0.6); padding: 1.5rem; margin: 2rem auto; max-width: 850px; border-radius: 15px; }
+    h1 { font-size: 2.8rem; color: #98fb98; text-shadow: 0 0 20px #228b22; text-align: center; }
+    p { margin: 0.6rem 0; font-size: 1.2rem; }
+    .vote-yes { color: #90ee90; }
+    .vote-no { color: #ff6347; }
   </style>
 </head>
 <body>
-  <h1>LIVE GLOBAL VOTE LEDGER – Immutable Forever</h1>
-  <div style="text-align:center;">
-    <a href="index.html">← Back to vote</a>
+
+  <h1>VOTE LEDGER</h1>
+  <div class="box">
+    <a href="index.html" style="color:#90ee90;">← Vote</a>
+    <hr style="border-color:rgba(144,238,144,0.3);">
+    <div id="list"></div>
   </div>
-  <hr>
-  <div id="tally">Loading tally…</div>
-  <div id="list"></div>
 
   <script>
-    const SUPABASE_URL = "https://auqzjncsxxleillfnpyh.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_wKVt9PjkIrXGJPUezL57oQ_RM7V8Yl4";
-
-    async function loadLedger() {
-      try {
-        const resp = await fetch(`${SUPABASE_URL}/rest/v1/votes?order=timestamp.desc`, {
-          headers: { "apikey": SUPABASE_ANON_KEY }
-        });
-        const votes = await resp.json();
-
-        let sovereignty = 0;
-        let slavery = 0;
-        votes.forEach(v => {
-          if (v.choice === "Sovereignty") sovereignty++;
-          if (v.choice === "Slavery") slavery++;
-        });
-
-        document.getElementById('tally').innerHTML = `
-          <span>${sovereignty} Sovereignty</span>
-          <span>${slavery} Slavery</span>
-        `;
-
-        const div = document.getElementById('list');
-        div.innerHTML = '';
-        votes.forEach((v, i) => {
-          div.innerHTML += `<p>${i+1}. ${v.choice} – ${new Date(v.timestamp).toLocaleString()} – proof: ${v.proof}</p>`;
-        });
-        if (votes.length === 0) div.innerHTML = "<p style='text-align:center; font-size:1.3rem;'>No votes yet. Be the first to stand for Sovereignty.</p>";
-      } catch (err) {
-        document.getElementById('tally').innerHTML = "<span>Error loading ledger</span>";
-      }
-    }
-
-    loadLedger();
-    setInterval(loadLedger, 10000); // Refresh every 10 seconds
+    const key = "sb_publishable_wKVt9PjkIrXGJPUezL57oQ_RM7V8Yl4";
+    fetch("https://auqzjncsxxleillfnpyh.supabase.co/rest/v1/votes?select=*")
+      .then(r => r.json())
+      .then(votes => {
+        document.getElementById("list").innerHTML = votes.map(v => `
+          <p>${v.name} – ${v.city}, ${v.province}, ${v.country} 
+             <span class="vote-${v.choice === 'Sovereignty' ? 'yes' : 'no'}">${v.choice}</span></p>`
+        ).join("");
+        if (!votes.length) document.getElementById("list").innerHTML = "<p>No votes yet.</p>";
+      });
   </script>
 </body>
 </html>
