@@ -4,17 +4,44 @@
   <title>Live Vote Ledger</title>
   <style>
     body {
-      background: #0f1a0f;
-      color: #d4af37;
+      background: linear-gradient(rgba(245,241,234,0.85), rgba(245,241,234,0.85)),
+                  url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') center/cover fixed no-repeat;
+      color: #2a2a1a;
       font-family: monospace;
       padding: 2rem;
+      line-height: 1.8;
+      background-color: #f0e8d8;
     }
     h1 {
       text-align: center;
       text-shadow: 0 0 15px #d4af37;
+      color: #8b6f47;
     }
     a {
-      color: #a8c498;
+      color: #8b6f47;
+      font-size: 1.2rem;
+    }
+    #tally {
+      font-size: 2.5rem;
+      text-align: center;
+      margin: 2rem;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    #tally span {
+      background: rgba(212,175,55,0.2);
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(212,175,55,0.3);
+    }
+    #list p {
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      background: rgba(240,232,216,0.4);
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -22,7 +49,7 @@
   <h1>LIVE GLOBAL VOTE LEDGER – Immutable Forever</h1>
   <a href="index.html">← Back to vote</a>
   <hr>
-  <div id="tally" style="font-size:2rem; text-align:center; margin:2rem">Loading tally…</div>
+  <div id="tally">Loading tally…</div>
   <div id="list"></div>
   <script>
     const SUPABASE_URL = "https://auqzjncsxxleillfnpyh.supabase.co";
@@ -41,9 +68,13 @@
         if (v.choice === "Slavery") slavery++;
       });
 
-      document.getElementById('tally').innerText = `Tally: ${sovereignty} Sovereignty | ${slavery} Slavery`;
+      document.getElementById('tally').innerHTML = `
+        <span>${sovereignty} Sovereignty</span>
+        <span>${slavery} Slavery</span>
+      `;
 
       const div = document.getElementById('list');
+      div.innerHTML = '';
       votes.forEach((v,i) => {
         div.innerHTML += `<p>${i+1}. ${v.choice} – ${new Date(v.timestamp).toLocaleString()} – proof: ${v.proof}</p>`;
       });
@@ -51,7 +82,7 @@
     }
 
     loadLedger();
-    setInterval(loadLedger, 10000); // Auto-refresh every 10 seconds
+    setInterval(loadLedger, 10000);
   </script>
 </body>
 </html>
