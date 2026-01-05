@@ -4,7 +4,7 @@
   <title>Live Vote Ledger</title>
   <style>
     body {
-      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') center/cover fixed no-repeat;
+      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') top center / contain no-repeat fixed;
       background-color: rgba(0, 80, 0, 0.85);
       color: #e8f5e8;
       font-family: monospace;
@@ -15,52 +15,92 @@
     }
     h1 {
       text-align: center;
-      font-size: 2.8rem;
-      color: #f0e68c;
-      text-shadow: 0 0 20px #228b22;
-    }
-    .box {
-      background: rgba(0, 100, 0, 0.6);
-      padding: 1.5rem;
-      border-radius: 20px;
-      margin: 2rem auto;
-      max-width: 850px;
-      box-shadow: 0 0 30px rgba(34,139,34,0.6);
-      border: 1px solid rgba(144,238,144,0.4);
+      font-size: 3rem;
+      color: #8B00FF; /* Royal Purple */
+      text-shadow: 0 0 20px #4B0082, 0 0 40px #8B00FF;
     }
     a {
       color: #90ee90;
+      font-size: 1.3rem;
     }
-    p {
+    #tally {
+      font-size: 3.5rem;
+      text-align: center;
+      font-weight: bold;
+      margin: 3rem auto;
+      padding: 2.5rem;
+      background: rgba(0, 80, 0, 0.9);
+      border-radius: 30px;
+      box-shadow: 0 0 60px rgba(34,139,34,1), inset 0 0 30px rgba(144,238,144,0.4);
+      border: 5px solid #228b22;
+      max-width: 800px;
+      color: #ffffff;
+      text-shadow: 0 0 20px #228b22;
+    }
+    #tally .live-label {
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: 1.5rem;
+      color: #f0e68c;
+      text-shadow: 0 0 30px #228b22;
+      letter-spacing: 4px;
+    }
+    #tally span {
+      display: inline-block;
+      margin: 0 3rem;
+      padding: 1.5rem 3rem;
+      background: rgba(144,238,144,0.4);
+      border-radius: 25px;
+      min-width: 300px;
+      font-size: 3rem;
+      box-shadow: 0 0 30px rgba(34,139,34,0.9);
+    }
+    #list {
+      max-width: 900px;
+      margin: 2rem auto;
+    }
+    #list p {
+      background: rgba(0, 100, 0, 0.6);
+      padding: 1rem;
       margin: 0.8rem 0;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(34,139,34,0.4);
     }
   </style>
 </head>
 <body>
-  <h1>LIVE GLOBAL VOTE LEDGER – Immutable Forever</h1>
-  <div class="box">
-    <div style="text-align:center;"><a href="index.html">← Back to vote</a></div>
-    <hr style="border-color:rgba(144,238,144,0.3);">
-    <div id="list"></div>
+  <h1>LIVE GLOBAL VOTE LEDGER</h1>
+  <div style="text-align:center; margin-bottom:2rem;">
+    <a href="index.html">← Back to vote</a>
   </div>
+
+  <div id="tally">
+    <div class="live-label">LIVE GLOBAL TALLY</div>
+    <span id="sovCount">0 Sovereignty</span>
+    <span id="slaCount">0 Slavery</span>
+  </div>
+
+  <div id="list"></div>
 
   <script>
     const SUPABASE_URL = "https://auqzjncsxxleillfnpyh.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_wKVt9PjkIrXGJPUezL57oQ_RM7V8Yl4";
 
     async function loadLedger() {
-      const resp = await fetch(`${SUPABASE_URL}/rest/v1/votes?select=name,city,province,country,choice,timestamp&order=timestamp.desc`, {
+      const resp = await fetch(`${SUPABASE_URL}/rest/v1/votes?select=choice,timestamp&order=timestamp.desc`, {
         headers: { "apikey": SUPABASE_ANON_KEY }
       });
       const votes = await resp.json();
 
-      const div = document.getElementById('list');
-      div.innerHTML = votes.map(v => `
-        <p><strong>${v.name}</strong> – ${v.city}, ${v.province}, ${v.country}<br>
-        Vote: <span style="color:${v.choice === 'Sovereignty' ? '#90ee90' : '#ff6347'}">${v.choice}</span> – ${new Date(v.timestamp).toLocaleString()}</p>
-      `).join('');
+      let sov = 0, sla = 0;
+      votes.forEach(v => v.choice === "Sovereignty" ? sov++ : sla++);
 
-      if (votes.length === 0) div.innerHTML = "<p style='text-align:center;'>No votes yet — be the first.</p>";
+      document.querySelector('#tally span:first-child').textContent = `${sov} Sovereignty`;
+      document.querySelector('#tally span:last-child').textContent = `${sla} Slavery`;
+
+      const div = document.getElementById('list');
+      div.innerHTML = votes.map((v, i) => `<p>${i+1}. ${v.choice} – ${new Date(v.timestamp).toLocaleString()}</p>`).join('');
+      if (votes.length === 0) div.innerHTML = "<p style='text-align:center; font-size:1.4rem;'>No votes yet — be the first to stand for Sovereignty.</p>";
     }
 
     loadLedger();
