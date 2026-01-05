@@ -41,7 +41,6 @@ async function castVote(choice) {
   const hash = localStorage.getItem('myhash');
   const vote = { choice, timestamp: new Date().toISOString(), proof: hash.slice(0,12) };
 
-  // Save to Supabase automatically
   await fetch(`${SUPABASE_URL}/rest/v1/votes`, {
     method: "POST",
     headers: {
@@ -53,7 +52,6 @@ async function castVote(choice) {
     body: JSON.stringify(vote)
   });
 
-  // Local backup
   let local = JSON.parse(localStorage.getItem('localvotes') || '[]');
   local.push(vote);
   localStorage.setItem('localvotes', JSON.stringify(local));
