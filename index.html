@@ -5,7 +5,7 @@
   <style>
     body {
       background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') top center / contain no-repeat fixed;
-      background-color: rgba(0, 80, 0, 0.85); /* Royal green translucent outside image */
+      background-color: rgba(0, 80, 0, 0.85);
       color: #e8f5e8;
       font-family: monospace;
       padding: 2rem;
@@ -14,12 +14,13 @@
       margin: auto;
       text-shadow: 1px 1px 3px #000;
       min-height: 100vh;
+      box-sizing: border-box;
     }
     h1 {
       font-size: 3.2rem;
       text-align: center;
-      color: #f0e68c;
-      text-shadow: 0 0 20px #228b22;
+      color: #8B00FF; /* Royal Purple */
+      text-shadow: 0 0 20px #4B0082, 0 0 40px #8B00FF;
       margin: 1rem 0 2rem 0;
     }
     h2 {
@@ -30,7 +31,7 @@
       margin: 2rem 0;
     }
     .box {
-      background: rgba(0, 100, 0, 0.6); /* Royal green translucent */
+      background: rgba(0, 100, 0, 0.6);
       padding: 1.8rem;
       border-radius: 20px;
       margin: 2rem auto;
@@ -68,21 +69,36 @@
       min-height: 1.4rem;
     }
     #tally {
-      font-size: 2rem;
+      font-size: 3rem;
       text-align: center;
       font-weight: bold;
-      display: flex;
-      justify-content: center;
-      gap: 3rem;
-      flex-wrap: wrap;
-      margin: 2rem 0;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: rgba(0, 80, 0, 0.9);
+      border-radius: 30px;
+      box-shadow: 0 0 50px rgba(34,139,34,1), inset 0 0 20px rgba(144,238,144,0.3);
+      border: 4px solid #228b22;
+      max-width: 700px;
+      color: #ffffff;
+      text-shadow: 0 0 15px #228b22;
+    }
+    #tally .live-label {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 1rem;
+      color: #f0e68c;
+      text-shadow: 0 0 25px #228b22;
+      letter-spacing: 3px;
     }
     #tally span {
-      background: rgba(144,238,144,0.3);
+      display: inline-block;
+      margin: 0 2rem;
       padding: 1rem 2rem;
-      border-radius: 15px;
-      color: #228b22;
-      text-shadow: 0 0 8px #000;
+      background: rgba(144,238,144,0.4);
+      border-radius: 20px;
+      min-width: 250px;
+      font-size: 2.5rem;
+      box-shadow: 0 0 20px rgba(34,139,34,0.8);
     }
     .note {
       font-size: 1.2rem;
@@ -127,8 +143,9 @@
     </div>
 
     <div id="tally">
-      <span>0 Sovereignty</span>
-      <span>0 Slavery</span>
+      <div class="live-label">LIVE GLOBAL TALLY</div>
+      <span id="sovCount">0 Sovereignty</span>
+      <span id="slaCount">0 Slavery</span>
     </div>
     <div style="text-align:center; margin-top:1rem;"><a href="ledger.html">View full live ledger</a></div>
   </div>
