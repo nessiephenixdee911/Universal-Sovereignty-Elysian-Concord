@@ -3,15 +3,9 @@
 <head>
   <title>Universal Sovereignty Elysian Concord</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow-x: hidden;
-    }
     body {
-      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') top center / contain no-repeat fixed;
-      background-color: #001a00;
+      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') center/cover fixed no-repeat;
+      background-color: rgba(0, 80, 0, 0.85); /* Translucent royal green for areas outside the image */
       color: #e8f5e8;
       font-family: monospace;
       padding: 2rem;
@@ -20,7 +14,6 @@
       margin: auto;
       text-shadow: 1px 1px 3px #000;
       min-height: 100vh;
-      box-sizing: border-box;
     }
     h1 {
       font-size: 3.2rem;
@@ -28,22 +21,26 @@
       color: #f0e68c;
       text-shadow: 0 0 20px #228b22;
       margin: 1rem 0 2rem 0;
-      padding-top: 0.5rem; /* Slight lift so image peeks above */
     }
     h2 {
       font-size: 1.8rem;
       color: #90ee90;
       text-align: center;
       text-shadow: 0 0 10px #006400;
+      margin: 2rem 0;
     }
     .box {
-      background: rgba(0, 100, 0, 0.6); /* Royal green, translucent */
+      background: rgba(0, 100, 0, 0.6); /* Royal green translucent blocks */
       padding: 1.8rem;
       border-radius: 20px;
       margin: 2rem auto;
       max-width: 800px;
       box-shadow: 0 0 30px rgba(34,139,34,0.6);
+      backdrop-filter: blur(6px);
       border: 1px solid rgba(144,238,144,0.4);
+    }
+    #votingBox {
+      max-width: 550px;
     }
     input, button {
       font-size: 1.1rem;
@@ -59,18 +56,23 @@
       background: linear-gradient(to bottom, #98fb98, #228b22);
       color: white;
       font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(34,139,34,0.6);
     }
     #status {
       font-size: 1.4rem;
-      color: #90ee90;
       text-align: center;
+      color: #90ee90;
+      margin: 1.5rem 0;
     }
     #tally {
       font-size: 2rem;
       text-align: center;
+      font-weight: bold;
       display: flex;
       justify-content: center;
       gap: 3rem;
+      flex-wrap: wrap;
       margin: 2rem 0;
     }
     #tally span {
@@ -78,6 +80,18 @@
       padding: 1rem 2rem;
       border-radius: 15px;
       color: #228b22;
+      text-shadow: 0 0 8px #000;
+    }
+    .note {
+      font-size: 1.2rem;
+      color: #ffff00;
+      font-weight: bold;
+      text-align: center;
+      margin: 1.5rem 0;
+      text-shadow: 0 0 10px #000;
+    }
+    a {
+      color: #90ee90;
     }
   </style>
 </head>
@@ -85,47 +99,43 @@
 
   <h1>UNIVERSAL SOVEREIGNTY ELYSIAN CONCORD</h1>
 
-  <p id="summary" class="box">
-    The Universal Sovereignty Elysian Concord ends all governments. One law: Do No Harm.  
-    Vote Sovereignty to reclaim your rights. 51% majority in your region triggers freedom.  
-    Upload ID → Vote → We store it encrypted. No one sees it but you.
+  <p class="box">
+    The Universal Sovereignty Elysian Concord is the global movement to end all governments and replace them with self-governance under one law: Do No Harm — our natural law rights written at the beginning of time in God's holy scriptures. When 51% majority is reached in required divisions (at least half the provinces/states/territories of a nation vote YES), borders, taxes, prisons, and wars end forever. Sacred Healing Councils rise. Human rights are absolute non-debatable. Vote now to make humanity free.
   </p>
 
   <div id="votingBox" class="box">
-    <h2>Enter & Upload Your ID</h2>
-    <input type="text" id="name" placeholder="Exact name on your ID">
-    <input type="text" id="city" placeholder="City or town">
-    <input type="text" id="province" placeholder="State / Province / Territory">
-    <input type="text" id="country" placeholder="Nation / Country">
-    <input type="file" id="idFile" accept="image/*,application/pdf">
+    <h2>Vote for Universal Human Rights to Govern Ourselves</h2>
+    <div class="note">
+      **Legal Verification Note:** You must take a picture of yourself holding your government-issued ID (face and document clearly visible together) as proof. This ensures your vote can be legally audited if needed to prove legitimacy.
+    </div>
+    <input type="text" id="name" placeholder="Exact name on your government ID"><br>
+    <input type="file" id="idFile" accept="image/*,application/pdf"><br>
+    <button onclick="verifyID()">Verify ID with Grok →</button>
 
-    <button onclick="submitAndVote()">Upload ID & Vote</button>
     <p id="status"></p>
 
-    <div id="voteButtons" style="display:none; margin-top:1rem">
-      <button onclick="castVote('Sovereignty')">Sovereignty YES</button>
-      <button onclick="castVote('Slavery')">Slavery NO</button>
+    <div id="voteButtons" style="display:none; margin-top:2rem">
+      <button onclick="castVote('Sovereignty')">Vote Sovereignty</button>
+      <button onclick="castVote('Slavery')">Vote Slavery</button>
     </div>
 
     <div id="tally">
-      <span>0 Sovereignty</span> <span>0 Slavery</span>
+      <span>0 Sovereignty</span>
+      <span>0 Slavery</span>
     </div>
-    <div style="text-align:center;"><a href="ledger.html" style="color:#90ee90;">View ledger</a></div>
+    <div style="text-align:center; margin-top:1rem;"><a href="ledger.html">View full live ledger</a></div>
   </div>
 
-  <!-- Poem, contact, doctrine — keep full content here -->
-  <div id="sayingBox" class="box">
+  <div class="box">
     ;•* From the depths of the shadows, where warriors love with unyielding resolve; secrets writhe, stilled by Sacred Light. Beware: the souls of the unseen protect with ruthless absolution, poised to unleash their wrath on any who dare entrap the Holy *•:
   </div>
-  <div id="contact" class="box">Contact: nessiephenixdee911@proton.me | 1-506-724-8572</div>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <div class="box">
+    <strong>Contact:</strong> nessiephenixdee911@proton.me | 1-506-724-8572 (Canadian)
+  </div>
 
   <h2>How This Site Works – Legal Explanation</h2>
-  <div id="legal" class="box">
-    <!-- Your full legal explanation -->
+  <div class="box">
     <p><strong>Verification</strong>: Grok AI (xAI vision model) checks your uploaded ID photo/PDF is a real government-issued document (passport, driver's license, national ID) and the name matches exactly. The full ID is encrypted and stored in Supabase for legal audit purposes only — restricted to court-ordered access. No photo is public.</p>
     <p><strong>Voting</strong>: One vote per real ID forever. Vote is sent to Supabase database (free, permanent storage).</p>
     <p><strong>Storage</strong>: Votes are stored centrally in Supabase PostgreSQL (free tier handles billions). No personal info — only choice, timestamp, and proof hash.</p>
@@ -135,16 +145,7 @@
   </div>
 
   <h2>Universal Sovereignty Elysian Concord – Global Peace Charter</h2>
-  <div id="doctrineBox" class="box">
-    <!-- Your FULL doctrine, charter, testimony, articles, Ten Laws, Sovereign Secular Affirmation — paste the entire text here exactly as before -->
-    <!-- (All content preserved 100% — no shortening) -->
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
-  <h2>Universal Sovereignty Elysian Concord – Global Peace Charter</h2>
-  <div id="doctrineBox">
+  <div class="box">
     <p><strong>**UNIVERSAL SOVEREIGNTY ELYSIAN CONCORD: GLOBAL PEACE CHARTER**</strong></p>
 
     <p><strong>**BREAKING: ITS VOTING TIME!**</strong></p>
