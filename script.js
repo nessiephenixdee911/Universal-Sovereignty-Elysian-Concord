@@ -1,84 +1,46 @@
-const SUPABASE_URL = "https://auqzjncsxxleillfnpyh.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_wKVt9PjkIrXGJPUezL57oQ_RM7V8Yl4";
-
-const GROK_KEY = "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";
+const API_URL = "https://your-fastapi-domain.com";  // Change to your deployed API
 
 async function verifyID() {
   const name = document.getElementById('name').value.trim();
   const file = document.getElementById('idFile').files[0];
   if (!name || !file) return status("Name + ID required");
 
-  status("Grok checking ID…");
-  const base64 = await fileToBase64(file);
+  status("Verifying with secure server…");
 
-  const resp = await fetch("https://api.x.ai/v1/chat/completions", {
-    method: "POST",
-    headers: { "Authorization": `Bearer ${GROK_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "grok-beta",
-      messages: [{ role: "user", content: [
-        { type: "text", text: `Is this a REAL government ID? Exact name "${name}"? Not fake? YES or NO.` },
-        { type: "image_url", image_url: { url: base64 } }
-      ]}]
-    })
-  });
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("id_file", file);
 
-  const data = await resp.json();
-  const answer = data.choices[0].message.content.trim().toUpperCase();
+  try {
+    const resp = await fetch(`${API_URL}/verify-id`, {
+      method: "POST",
+      body: formData
+    });
 
-  if (answer !== "YES") return status("❌ Grok rejected – not real ID or name wrong");
+    const data = await resp.json();
 
-  const arrayBuffer = await file.arrayBuffer();
-  const hash = await sha256(arrayBuffer);
+    if (!resp.ok) throw new Error(data.detail || "Verification failed");
 
-  if (localStorage.getItem('voted_' + hash)) return status("Already voted with this ID");
-
-  localStorage.setItem('voted_' + hash, 'true');
-  localStorage.setItem('myhash', hash);
-  status("✅ Real government ID verified! Vote now.");
-  document.getElementById('voteButtons').style.display = 'block';
+    localStorage.setItem('myhash', data.proof_hash);
+    status("✅ ID verified! Vote now.");
+    document.getElementById('voteButtons').style.display = 'block';
+  } catch (err) {
+    status(`❌ ${err.message}`);
+  }
 }
 
 async function castVote(choice) {
-  const hash = localStorage.getItem('myhash');
-  if (!hash) return status("Verify ID first");
+  const proof = localStorage.getItem('myhash');
+  if (!proof) return status("Verify ID first");
 
-  const vote = { choice, timestamp: new Date().toISOString(), proof: hash.slice(0,12) };
+  await fetch(`${API_URL}/record-vote`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ choice, proof_hash: proof })
+  });
 
-  try {
-    await fetch(`${SUPABASE_URL}/rest/v1/votes`, {
-      method: "POST",
-      headers: {
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-        "Content-Type": "application/json",
-        "Prefer": "return=minimal"
-      },
-      body: JSON.stringify(vote)
-    });
-  } catch (e) {
-    console.error("Supabase error:", e);
-  }
-
-  let local = JSON.parse(localStorage.getItem('localvotes') || '[]');
-  local.push(vote);
-  localStorage.setItem('localvotes', JSON.stringify(local));
-
-  status("Vote saved forever!");
+  status("Vote recorded forever!");
   document.getElementById('voteButtons').style.display = 'none';
 }
 
 function status(t) { document.getElementById('status').innerText = t; }
-
-async function fileToBase64(f) {
-  return new Promise(r => {
-    let reader = new FileReader();
-    reader.onload = () => r(reader.result);
-    reader.readAsDataURL(f);
-  });
-}
-
-async function sha256(b) {
-  let h = await crypto.subtle.digest("SHA-256", b);
-  return Array.from(new Uint8Array(h)).map(c => c.toString(16).padStart(2,"0")).join("");
-}
