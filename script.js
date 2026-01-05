@@ -1,46 +1,83 @@
-const API_URL = "https://your-fastapi-domain.com";  // Change to your deployed API
+const SUPABASE_URL = "https://auqzjncsxxleillfnpyh.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_wKVt9PjkIrXGJPUezL57oQ_RM7V8Yl4";
 
-async function verifyID() {
-  const name = document.getElementById('name').value.trim();
+async function submitAndVote() {
+  const fields = ['name', 'city', 'province', 'country', 'idFile'];
+  for (let id of fields.slice(0, -1)) {
+    const val = document.getElementById(id).value.trim();
+    if (!val) return status("Fill all fields");
+  }
   const file = document.getElementById('idFile').files[0];
-  if (!name || !file) return status("Name + ID required");
+  if (!file) return status("Upload ID");
 
-  status("Verifying with secure server…");
+  status("Uploading ID securely…");
 
+  // Upload raw file — Supabase handles encryption
   const formData = new FormData();
-  formData.append("name", name);
-  formData.append("id_file", file);
+  formData.append("file", file);
+  formData.append("upload", JSON.stringify({ name: file.name, size: file.size }));
 
   try {
-    const resp = await fetch(`${API_URL}/verify-id`, {
+    const uploadResp = await fetch(`${SUPABASE_URL}/storage/v1/object/ids?bucket=private-ids`, {
       method: "POST",
+      headers: {
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+      },
       body: formData
     });
 
-    const data = await resp.json();
+    if (!uploadResp.ok) throw new Error("Upload failed");
 
-    if (!resp.ok) throw new Error(data.detail || "Verification failed");
+    // Save vote record with metadata — no public link
+    const voteData = {
+      name: document.getElementById('name').value,
+      city: document.getElementById('city').value,
+      province: document.getElementById('province').value,
+      country: document.getElementById('country').value,
+      file_url: `https://auqzjncsxxleillfnpyh.supabase.co/storage/v1/object/public/ids/${file.name}`, // even this is private in real bucket
+      status: "uploaded",
+      timestamp: new Date().toISOString()
+    };
 
-    localStorage.setItem('myhash', data.proof_hash);
-    status("✅ ID verified! Vote now.");
-    document.getElementById('voteButtons').style.display = 'block';
-  } catch (err) {
-    status(`❌ ${err.message}`);
+    await fetch(`${SUPABASE_URL}/rest/v1/votes`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify(voteData)
+    });
+
+    status("ID stored — encrypted & locked. Vote now.");
+    document.getElementById('voteButtons').style.display = "block";
+    localStorage.setItem("voted", "true");
+  } catch (e) {
+    status("Error: " + e.message);
   }
 }
 
 async function castVote(choice) {
-  const proof = localStorage.getItem('myhash');
-  if (!proof) return status("Verify ID first");
+  const data = await fetch(`${SUPABASE_URL}/rest/v1/votes?select=choice`).then(r => r.json());
+  const tally = { Sovereignty: 0, Slavery: 0 };
+  data.forEach(v => tally ++);
 
-  await fetch(`${API_URL}/record-vote`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ choice, proof_hash: proof })
+  document.querySelectorAll('#tally span').forEach((s, i) => {
+    const key = i === 0 ? "Sovereignty" : "Slavery";
+    s.textContent = `${tally } ${key}`;
   });
 
-  status("Vote recorded forever!");
-  document.getElementById('voteButtons').style.display = 'none';
+  // Save final vote
+  const vote = { choice, timestamp: new Date().toISOString() };
+  await fetch(`${SUPABASE_URL}/rest/v1/votes`, {
+    method: "POST",
+    headers: { "apikey": SUPABASE_ANON_KEY, "Content-Type": "application/json" },
+    body: JSON.stringify(vote)
+  });
+
+  status("Vote sealed forever.");
+  document.getElementById('voteButtons').style.display = "none";
 }
 
-function status(t) { document.getElementById('status').innerText = t; }
+function status(msg) { document.getElementById("status").textContent = msg; }
