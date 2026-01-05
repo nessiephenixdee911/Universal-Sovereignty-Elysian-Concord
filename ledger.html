@@ -3,7 +3,19 @@
 <head>
   <title>Live Vote Ledger</title>
   <style>
-    body {background:#000; color:#0f0; font-family:monospace; padding:2rem}
+    body {
+      background: #0f1a0f;
+      color: #d4af37;
+      font-family: monospace;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      text-shadow: 0 0 15px #d4af37;
+    }
+    a {
+      color: #a8c498;
+    }
   </style>
 </head>
 <body>
@@ -26,7 +38,7 @@
       let slavery = 0;
       votes.forEach(v => {
         if (v.choice === "Sovereignty") sovereignty++;
-        if (v.choice === "Slavery") concord++;
+        if (v.choice === "Slavery") slavery++;
       });
 
       document.getElementById('tally').innerText = `Tally: ${sovereignty} Sovereignty | ${slavery} Slavery`;
@@ -39,6 +51,7 @@
     }
 
     loadLedger();
+    setInterval(loadLedger, 10000); // Auto-refresh every 10 seconds
   </script>
 </body>
 </html>
