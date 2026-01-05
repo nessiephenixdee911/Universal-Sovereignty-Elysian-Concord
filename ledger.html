@@ -4,87 +4,112 @@
   <title>Live Vote Ledger</title>
   <style>
     body {
-      background: linear-gradient(rgba(245,241,234,0.4), rgba(245,241,234,0.4)),
-                  url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') center/cover fixed no-repeat;
-      color: #2a2a1a;
+      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') center/cover fixed no-repeat;
+      color: #e8f5e8;
       font-family: monospace;
       padding: 2rem;
       line-height: 1.8;
-      background-color: #e0d8c8;
-      font-size: 1rem;
+      background-color: #001a00;
+      min-height: 100vh;
+      font-size: 1.1rem;
+      text-shadow: 1px 1px 3px #000;
     }
     h1 {
       text-align: center;
-      text-shadow: 0 0 15px #d4af37;
-      color: #8b6f47;
-      font-size: 2.5rem;
+      font-size: 2.8rem;
+      color: #98fb98;
+      text-shadow: 0 0 20px #228b22;
+      margin: 2rem 0;
     }
     a {
-      color: #8b6f47;
-      font-size: 1.2rem;
+      color: #90ee90;
+      font-size: 1.3rem;
+      text-decoration: none;
+    }
+    a:hover {
+      text-shadow: 0 0 10px #228b22;
     }
     #tally {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       text-align: center;
-      margin: 2rem;
+      margin: 3rem auto;
       font-weight: bold;
       display: flex;
       justify-content: center;
-      gap: 3rem;
+      gap: 4rem;
       flex-wrap: wrap;
     }
     #tally span {
-      background: rgba(212,175,55,0.2);
-      padding: 1rem 2rem;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(212,175,55,0.3);
+      background: rgba(0, 100, 0, 0.6); /* Royal green translucent */
+      padding: 1.2rem 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(34,139,34,0.8);
+      border: 1px solid rgba(144,238,144,0.5);
+      color: #e8f5e8;
+    }
+    #list {
+      max-width: 900px;
+      margin: 2rem auto;
     }
     #list p {
-      margin: 0.5rem 0;
-      padding: 0.5rem;
-      background: rgba(240,232,216,0.4);
-      border-radius: 8px;
+      background: rgba(0, 100, 0, 0.5);
+      padding: 1rem;
+      margin: 0.8rem 0;
+      border-radius: 12px;
+      border-left: 5px solid #228b22;
+      box-shadow: 0 0 15px rgba(34,139,34,0.4);
+    }
+    hr {
+      border: 1px solid rgba(144,238,144,0.3);
+      margin: 2rem 0;
     }
   </style>
 </head>
 <body>
   <h1>LIVE GLOBAL VOTE LEDGER – Immutable Forever</h1>
-  <a href="index.html">← Back to vote</a>
+  <div style="text-align:center;">
+    <a href="index.html">← Back to vote</a>
+  </div>
   <hr>
   <div id="tally">Loading tally…</div>
   <div id="list"></div>
+
   <script>
     const SUPABASE_URL = "https://auqzjncsxxleillfnpyh.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_wKVt9PjkIrXGJPUezL57oQ_RM7V8Yl4";
 
     async function loadLedger() {
-      const resp = await fetch(`${SUPABASE_URL}/rest/v1/votes?order=timestamp.desc`, {
-        headers: { "apikey": SUPABASE_ANON_KEY }
-      });
-      const votes = await resp.json();
+      try {
+        const resp = await fetch(`${SUPABASE_URL}/rest/v1/votes?order=timestamp.desc`, {
+          headers: { "apikey": SUPABASE_ANON_KEY }
+        });
+        const votes = await resp.json();
 
-      let sovereignty = 0;
-      let slavery = 0;
-      votes.forEach(v => {
-        if (v.choice === "Sovereignty") sovereignty++;
-        if (v.choice === "Slavery") slavery++;
-      });
+        let sovereignty = 0;
+        let slavery = 0;
+        votes.forEach(v => {
+          if (v.choice === "Sovereignty") sovereignty++;
+          if (v.choice === "Slavery") slavery++;
+        });
 
-      document.getElementById('tally').innerHTML = `
-        <span>${sovereignty} Sovereignty</span>
-        <span>${slavery} Slavery</span>
-      `;
+        document.getElementById('tally').innerHTML = `
+          <span>${sovereignty} Sovereignty</span>
+          <span>${slavery} Slavery</span>
+        `;
 
-      const div = document.getElementById('list');
-      div.innerHTML = '';
-      votes.forEach((v,i) => {
-        div.innerHTML += `<p>${i+1}. ${v.choice} – ${new Date(v.timestamp).toLocaleString()} – proof: ${v.proof}</p>`;
-      });
-      if (votes.length === 0) div.innerHTML = "<p>No votes yet.</p>";
+        const div = document.getElementById('list');
+        div.innerHTML = '';
+        votes.forEach((v, i) => {
+          div.innerHTML += `<p>${i+1}. ${v.choice} – ${new Date(v.timestamp).toLocaleString()} – proof: ${v.proof}</p>`;
+        });
+        if (votes.length === 0) div.innerHTML = "<p style='text-align:center; font-size:1.3rem;'>No votes yet. Be the first to stand for Sovereignty.</p>";
+      } catch (err) {
+        document.getElementById('tally').innerHTML = "<span>Error loading ledger</span>";
+      }
     }
 
     loadLedger();
-    setInterval(loadLedger, 10000);
+    setInterval(loadLedger, 10000); // Refresh every 10 seconds
   </script>
 </body>
 </html>
