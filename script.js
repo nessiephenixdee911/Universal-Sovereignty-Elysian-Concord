@@ -13,13 +13,12 @@ async function submitVote() {
     return;
   }
 
-  status("Uploading securely to Supabase...");
+  status("Uploading securely...");
 
   const formData = new FormData();
   formData.append("file", file);
 
   try {
-    // Upload file to Supabase Storage (private bucket recommended)
     const uploadPath = `ids/${Date.now()}_${file.name}`;
     const uploadResp = await fetch(`${SUPABASE_URL}/storage/v1/object/private-ids/${uploadPath}`, {
       method: "POST",
@@ -32,12 +31,8 @@ async function submitVote() {
 
     if (!uploadResp.ok) throw new Error("Upload failed");
 
-    // Save vote record
     const voteRecord = {
-      name,
-      city,
-      province,
-      country,
+      name, city, province, country,
       file_path: uploadPath,
       timestamp: new Date().toISOString(),
       status: "registered"
@@ -53,8 +48,9 @@ async function submitVote() {
       body: JSON.stringify(voteRecord)
     });
 
-    status("ID uploaded & registered securely. Now cast your vote:");
+    status("ID uploaded securely. Now cast your vote:");
     document.getElementById('voteButtons').style.display = "block";
+    updateTally();
   } catch (e) {
     status("Error: " + e.message);
   }
@@ -71,16 +67,18 @@ async function castVote(choice) {
     body: JSON.stringify({ choice, timestamp: new Date().toISOString() })
   });
 
-  // Update tally
+  status("Your vote is sealed forever.");
+  document.getElementById('voteButtons').style.display = "none";
+  updateTally();
+}
+
+async function updateTally() {
   const votes = await fetch(`${SUPABASE_URL}/rest/v1/votes?select=choice`).then(r => r.json());
   let sov = 0, sla = 0;
   votes.forEach(v => v.choice === "Sovereignty" ? sov++ : sla++);
 
-  document.querySelectorAll('#tally span')[0].textContent = `${sov} Sovereignty`;
-  document.querySelectorAll('#tally span')[1].textContent = `${sla} Slavery`;
-
-  status("Your vote is sealed forever.");
-  document.getElementById('voteButtons').style.display = "none";
+  document.querySelector('#tally span:first-child').textContent = `${sov} Sovereignty`;
+  document.querySelector('#tally span:last-child').textContent = `${sla} Slavery`;
 }
 
 function status(msg) {
