@@ -1,98 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Public Ledger - USEC</title>
-    <script src="script.js" defer></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 20px 0;
-            font-family: Arial, sans-serif;
-            color: #fff;
-            background: url('https://images.unsplash.com/photo-1578662996442-48f60103fcbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
-            background-size: cover;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-        }
-        .header-banner {
-            background-color: rgba(0, 31, 63, 0.9);
-            color: #ffd700;
-            text-align: center;
-            padding: 12px 0;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-        .ledger-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(6px);
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid #ffd700;
-        }
-        h1 {
-            text-align: center;
-            color: #ffd700;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9em;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ffd700;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: rgba(0, 31, 63, 0.9);
-            color: #ffd700;
-        }
-        .yes {
-            background-color: rgba(0, 80, 0, 0.6);
-        }
-        .back-link {
-            text-align: center;
-            margin-top: 40px;
-        }
-        .back-link a {
-            color: #ffd700;
-            font-weight: bold;
-            margin: 0 15px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Vote Ledger</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body {
+      background: url('https://i.ibb.co/gZ8mvQNW/8-A5-D39-BC-6070-47-C3-977-F-BC08530456-A0.png') top center / contain no-repeat fixed;
+      background-color: rgba(0, 80, 0, 0.85);
+      color: #e8f5e8;
+      font-family: monospace;
+      padding: 2rem;
+      line-height: 1.8;
+      text-shadow: 1px 1px 3px #000;
+    }
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      color: #8B00FF;
+      text-shadow: 0 0 20px #4B0082, 0 0 40px #8B00FF;
+    }
+    a {
+      color: #90ee90;
+      font-size: 1.3rem;
+    }
+    #tally {
+      font-size: 3.5rem;
+      text-align: center;
+      font-weight: bold;
+      margin: 3rem auto;
+      padding: 2.5rem;
+      background: rgba(0, 80, 0, 0.9);
+      border-radius: 30px;
+      box-shadow: 0 0 60px rgba(34,139,34,1), inset 0 0 30px rgba(144,238,144,0.4);
+      border: 5px solid #228b22;
+      max-width: 90vw;
+      color: #ffffff;
+      text-shadow: 0 0 20px #228b22;
+    }
+    #tally .live-label {
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: 1.5rem;
+      color: #f0e68c;
+      text-shadow: 0 0 30px #228b22;
+      letter-spacing: 4px;
+    }
+    #tally span {
+      display: inline-block;
+      margin: 0 3rem;
+      padding: 1.5rem 3rem;
+      background: rgba(144,238,144,0.4);
+      border-radius: 25px;
+      min-width: 300px;
+      font-size: 3rem;
+      box-shadow: 0 0 30px rgba(34,139,34,0.9);
+    }
+    #list {
+      max-width: 900px;
+      margin: 2rem auto;
+    }
+    #list p {
+      background: rgba(0, 100, 0, 0.6);
+      padding: 1rem;
+      margin: 0.8rem 0;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(34,139,34,0.4);
+    }
+  </style>
 </head>
 <body>
-    <div class="header-banner">
-        Universal Sovereignty Elysian Concord
-    </div>
+  <h1>LIVE GLOBAL VOTE LEDGER</h1>
+  <div style="text-align:center; margin-bottom:2rem;">
+    <a href="index.html">← Back to vote</a>
+  </div>
 
-    <div class="ledger-container">
-        <h1>Live Public Ledger</h1>
-        <p style="text-align:center;">Secure storage via Supabase (future) • Currently client-side immutable simulation • January 06, 2026</p>
+  <div id="tally">
+    <div class="live-label">LIVE GLOBAL TALLY</div>
+    <span id="sovCount">0 Sovereignty</span>
+    <span id="slaCount">0 Slavery</span>
+  </div>
 
-        <table id="ledger-table">
-            <thead>
-                <tr>
-                    <th>Vote ID (Hash)</th>
-                    <th>Timestamp</th>
-                    <th>Living Name</th>
-                    <th>Town/City, Country</th>
-                    <th>Vote</th>
-                    <th>Public Statement</th>
-                </tr>
-            </thead>
-            <tbody id="ledger-body">
-                <!-- Populated by script.js -->
-            </tbody>
-        </table>
-    </div>
+  <div id="list"></div>
 
-    <div class="back-link">
-        <a href="index.html">← Home</a> | <a href="voting.html">Vote</a> | <a href="doctrine.html">Doctrine</a>
-    </div>
+  <script>
+    const SUPABASE_URL = "https://auqzjncsxxleillfnpyh.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_wKVt9PjkIrXGJPUezL57oQ_RM7V8Yl4";
+
+    async function loadLedger() {
+      const resp = await fetch(`${SUPABASE_URL}/rest/v1/votes?select=choice,timestamp&order=timestamp.desc`, {
+        headers: { "apikey": SUPABASE_ANON_KEY }
+      });
+      const votes = await resp.json();
+
+      let sov = 0, sla = 0;
+      votes.forEach(v => v.choice === "Sovereignty" ? sov++ : sla++);
+
+      document.querySelector('#tally span:first-child').textContent = `${sov} Sovereignty`;
+      document.querySelector('#tally span:last-child').textContent = `${sla} Slavery`;
+
+      const div = document.getElementById('list');
+      div.innerHTML = votes.map((v, i) => `<p>${i+1}. ${v.choice} – ${new Date(v.timestamp).toLocaleString()}</p>`).join('');
+      if (votes.length === 0) div.innerHTML = "<p style='text-align:center; font-size:1.4rem;'>No votes yet — be the first to stand for Sovereignty.</p>";
+    }
+
+    loadLedger();
+    setInterval(loadLedger, 10000);
+  </script>
 </body>
 </html>
