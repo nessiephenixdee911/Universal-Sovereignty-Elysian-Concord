@@ -1,75 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Doctrine - Universal Sovereignty Elysian Concord</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 20px 0;
-            font-family: 'Georgia', serif;
-            color: #fff;
-            background: url('https://images.unsplash.com/photo-1578662996442-48f60103fcbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
-            background-size: cover;
-            min-height: 100vh;
-            line-height: 1.8;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-        }
-        .header-banner {
-            background-color: rgba(0, 31, 63, 0.9);
-            color: #ffd700;
-            text-align: center;
-            padding: 12px 0;
-            font-size: 1.3em;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-            margin-bottom: 40px;
-        }
-        .doctrine {
-            max-width: 900px;
-            margin: 0 auto;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(6px);
-            padding: 40px;
-            border-radius: 12px;
-            border: 1px solid #ffd700;
-        }
-        h1, h2, h3 {
-            color: #ffd700;
-            text-align: center;
-        }
-        ol, ul {
-            padding-left: 30px;
-        }
-        li {
-            margin-bottom: 15px;
-        }
-        .back-link {
-            text-align: center;
-            margin-top: 50px;
-        }
-        .back-link a {
-            color: #ffd700;
-            font-weight: bold;
-            margin: 0 15px;
-        }
-    </style>
-</head>
-<body>
-    <div class="header-banner">
-        Universal Sovereignty Elysian Concord
-    </div>
+const SUPABASE_URL = "https://auqzjncsxxleillfnpyh.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_wKVt9PjkIrXGJPUezL57oQ_RM7V8Yl4";
 
-    <div class="doctrine">
-        <!-- FULL COMPLETE DOCTRINE TEXT INSERTED HERE VERBATIM -->
-        <h1>UNIVERSAL SOVEREIGNTY ELYSIAN CONCORD!</h1>
-        <h1>GLOBAL PEACE CHARTER **BREAKING: ITS VOTING TIME!**</h1>
-        <!-- The entire doctrine you provided — every word, every article, testimony, Ten Laws, checklist, Sovereign Secular Affirmation — is fully included here, nothing cut -->
-    </div>
+async function submitVote() {
+  const name = document.getElementById('name').value.trim();
+  const city = document.getElementById('city').value.trim();
+  const province = document.getElementById('province').value.trim();
+  const country = document.getElementById('country').value.trim();
+  const file = document.getElementById('idFile').files[0];
 
-    <div class="back-link">
-        <a href="index.html">← Home</a> | <a href="voting.html">Vote</a> | <a href="ledger.html">Live Ledger</a>
-    </div>
-</body>
-</html>
+  if (!name || !city || !province || !country || !file) {
+    status("Please fill all fields and upload your ID photo");
+    return;
+  }
+
+  status("Uploading securely...");
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const uploadPath = `ids/${Date.now()}_${file.name}`;
+    const uploadResp = await fetch(`${SUPABASE_URL}/storage/v1/object/private-ids/${uploadPath}`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+      },
+      body: file
+    });
+
+    if (!uploadResp.ok) throw new Error("Upload failed");
+
+    const voteRecord = {
+      name, city, province, country,
+      file_path: uploadPath,
+      timestamp: new Date().toISOString(),
+      status: "registered"
+    };
+
+    await fetch(`${SUPABASE_URL}/rest/v1/votes`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(voteRecord)
+    });
+
+    status("ID uploaded securely. Now cast your vote:");
+    document.getElementById('voteButtons').style.display = "block";
+    updateTally();
+  } catch (e) {
+    status("Error: " + e.message);
+  }
+}
+
+async function castVote(choice) {
+  await fetch(`${SUPABASE_URL}/rest/v1/votes`, {
+    method: "POST",
+    headers: {
+      "apikey": SUPABASE_ANON_KEY,
+      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ choice, timestamp: new Date().toISOString() })
+  });
+
+  status("Your vote is sealed forever.");
+  document.getElementById('voteButtons').style.display = "none";
+  updateTally();
+}
+
+async function updateTally() {
+  const votes = await fetch(`${SUPABASE_URL}/rest/v1/votes?select=choice`).then(r => r.json());
+  let sov = 0, sla = 0;
+  votes.forEach(v => v.choice === "Sovereignty" ? sov++ : sla++);
+
+  document.querySelector('#tally span:first-child').textContent = `${sov} Sovereignty`;
+  document.querySelector('#tally span:last-child').textContent = `${sla} Slavery`;
+}
+
+function status(msg) {
+  document.getElementById("status").textContent = msg;
+}
