@@ -6,56 +6,197 @@
     <title>Universal Sovereignty Elysian Concord</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            font-family: 'Georgia', serif;
-            color: #fff;
-            background: url('https://images.unsplash.com/photo-1578662996442-48f60103fcbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
-            background-size: cover;
-            min-height: 100vh;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
         }
+        
+        /* Small banner title for front page */
         .header-banner {
-            background-color: rgba(0, 31, 63, 0.9);
-            color: #ffd700;
+            background-color: #003366; /* Deep blue for official feel */
+            color: white;
             text-align: center;
-            padding: 12px 0;
-            font-size: 1.3em;
+            padding: 10px 0;
+            font-size: 1.2em; /* Small but readable */
             font-weight: bold;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .content {
-            max-width: 900px;
+        
+        /* Compact voting box - all in one */
+        .voting-box {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            font-size: 0.9em; /* Smaller lettering */
+        }
+        
+        .voting-box h2 {
+            font-size: 1.4em;
+            margin-top: 0;
+            text-align: center;
+            color: #003366;
+        }
+        
+        .legal-note {
+            font-size: 0.85em;
+            color: #666;
+            font-style: italic;
+            margin: 10px 0 20px;
+            text-align: center;
+        }
+        
+        .voting-box form {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .voting-box label {
+            font-weight: bold;
+        }
+        
+        .voting-box input, .voting-box textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .voting-box button {
+            background-color: #003366;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        /* Compact live global tally - official election style */
+        .tally-section {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #999;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .tally-section h2 {
+            font-size: 1.3em;
+            text-align: center;
+            color: #003366;
+            margin-top: 0;
+        }
+        
+        .tally-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em; /* Small lettering */
+        }
+        
+        .tally-table th, .tally-table td {
+            border: 1px solid #999;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .tally-table th {
+            background-color: #e9e9e9;
+        }
+        
+        .tally-total {
+            font-weight: bold;
+            font-size: 1em;
+            margin-top: 15px;
+            text-align: right;
+        }
+        
+        /* Full doctrine inclusion (place this where needed, e.g., below tally or in a separate section) */
+        .full-doctrine {
+            max-width: 800px;
             margin: 40px auto;
             padding: 20px;
-            text-align: center;
-        }
-        h1 {
-            font-size: 2.5em;
-            color: #ffd700;
-        }
-        p {
-            font-size: 1.3em;
-            line-height: 1.8;
-        }
-        .btn {
-            display: inline-block;
-            margin: 20px 15px;
-            padding: 14px 32px;
-            background-color: rgba(0, 31, 63, 0.9);
-            color: #ffd700;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2em;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
             border-radius: 8px;
-            border: 2px solid #ffd700;
-            transition: 0.3s;
+            font-size: 0.95em;
+            line-height: 1.6;
         }
-        .btn:hover {
-            background-color: rgba(255, 215, 0, 0.3);
-            color: white;
-        }
+    </style>
+</head>
+<body>
+
+    <!-- Small banner title -->
+    <div class="header-banner">
+        Universal Sovereignty Elysian Concord
+    </div>
+
+    <!-- Voting page starts here - compact single box -->
+    <div class="voting-box">
+        <h2>Register Your Sovereign Vote</h2>
+        <p class="legal-note">Legal verification required. Your sovereign vote will be verified in accordance with established protocols.</p>
+        
+        <form>
+            <label>Full Name:</label>
+            <input type="text" required>
+            
+            <label>Email Address:</label>
+            <input type="email" required>
+            
+            <label>Date of Birth:</label>
+            <input type="date" required>
+            
+            <label>Sovereign Declaration/ID (if applicable):</label>
+            <input type="text">
+            
+            <label>Your Vote (Yes/No/Abstain):</label>
+            <textarea rows="3" placeholder="Enter your sovereign vote and any optional statement"></textarea>
+            
+            <button type="submit">Submit Sovereign Vote</button>
+        </form>
+    </div>
+
+    <!-- Live global tally - compact and official-looking -->
+    <div class="tally-section">
+        <h2>Live Global Tally</h2>
+        <table class="tally-table">
+            <thead>
+                <tr>
+                    <th>Option</th>
+                    <th>Votes</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Yes</td>
+                    <td>1,234,567</td>
+                    <td>62.5%</td>
+                </tr>
+                <tr>
+                    <td>No</td>
+                    <td>678,901</td>
+                    <td>34.4%</td>
+                </tr>
+                <tr>
+                    <td>Abstain</td>
+                    <td>61,234</td>
+                    <td>3.1%</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="tally-total">Total Votes Cast: 1,974,702 (Updated live)</p>
+    </div>
+
     </style>
 </head>
 <body>
