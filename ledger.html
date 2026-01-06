@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Sovereign Vote - USEC</title>
+    <title>Live Public Ledger - USEC</title>
+    <script src="script.js" defer></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,83 +23,114 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
             margin-bottom: 30px;
         }
-        .voting-box {
-            max-width: 600px;
-            margin: 0 auto 40px;
-            padding: 25px;
-            border: 2px solid #001f3f;
-            border-radius: 10px;
-            background-color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            font-size: 0.95em;
+        .ledger-container {
+            max-width: 900px;
+            margin: 0 auto;
         }
-        .voting-box h2 {
-            font-size: 1.6em;
-            margin-top: 0;
+        h1 {
             text-align: center;
             color: #d00;
-            font-weight: bold;
+            font-size: 1.8em;
         }
-        .legal-note {
-            font-size: 0.88em;
-            color: #555;
+        .ledger-info {
+            text-align: center;
             font-style: italic;
-            margin: 15px 0 25px;
-            text-align: center;
-            padding: 12px;
-            background-color: #fff0f0;
-            border-left: 5px solid #d00;
-            font-weight: bold;
-        }
-        form {
-            display: grid;
-            gap: 12px;
-        }
-        label {
-            font-weight: bold;
-            color: #001f3f;
-        }
-        input, textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 1em;
-        }
-        button {
-            background-color: #d00;
-            color: white;
-            padding: 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-        button:hover {
-            background-color: #b00000;
-        }
-        .tally-section {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 2px solid #001f3f;
-            border-radius: 10px;
-            background-color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .tally-section h2 {
-            font-size: 1.5em;
-            text-align: center;
-            color: #001f3f;
-            margin-top: 0;
+            color: #555;
+            margin-bottom: 30px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 1em;
-            margin-top:
-            
-            
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-size: 0.95em;
+        }
+        th, td {
+            border: 1px solid #001f3f;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #001f3f;
+            color: #ffd700;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+        .yes {
+            background-color: #e6ffe6 !important;
+            font-weight: bold;
+        }
+        .no {
+            background-color: #ffe6e6 !important;
+        }
+        .timestamp {
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .vote-id {
+            font-family: monospace;
+            font-size: 0.85em;
+            color: #0066cc;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.1em;
+        }
+        .back-link a {
+            color: #001f3f;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 15px;
+        }
+        .urgent {
+            text-align: center;
+            font-weight: bold;
+            color: #d00;
+            font-size: 1.3em;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-banner">
+        Universal Sovereignty Elysian Concord
+    </div>
+
+    <div class="ledger-container">
+        <h1>LIVE PUBLIC LEDGER</h1>
+        <p class="urgent">TAMPER-PROOF • IMMUTABLE • PUBLIC • FOREVER</p>
+        <p class="ledger-info">
+            Every sovereign vote is permanently recorded below with timestamp and unique hash.<br>
+            This ledger simulates blockchain immutability using cryptographic hashing and local indexed storage.<br>
+            No vote can be altered or deleted. The people have spoken.
+        </p>
+
+        <table id="ledger-table">
+            <thead>
+                <tr>
+                    <th>Vote ID (Hash)</th>
+                    <th>Timestamp</th>
+                    <th>Living Name</th>
+                    <th>Region</th>
+                    <th>Vote</th>
+                    <th>Public Statement</th>
+                </tr>
+            </thead>
+            <tbody id="ledger-body">
+                <!-- Votes will be injected here by script.js -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="back-link">
+        <a href="index.html">← Home</a> | 
+        <a href="voting.html">Register Vote</a> | 
+        <a href="doctrine.html">Full Doctrine</a>
+    </div>
+</body>
+</html>
