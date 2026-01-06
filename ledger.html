@@ -23,45 +23,45 @@
     }
     h1 {
       text-align: center;
-      font-size: 3rem;
+      font-size: 2.5rem; /* Smaller */
       color: #8B00FF;
-      text-shadow: 0 0 20px #4B0082, 0 0 40px #8B00FF;
+      text-shadow: 0 0 15px #4B0082;
     }
     a {
       color: #90ee90;
       font-size: 1.3rem;
     }
     #tally {
-      font-size: 3.5rem;
+      font-size: 2.2rem; /* Smaller tally */
       text-align: center;
       font-weight: bold;
-      margin: 3rem auto;
-      padding: 2.5rem;
+      margin: 2rem auto;
+      padding: 1.8rem;
       background: rgba(0, 80, 0, 0.9);
-      border-radius: 30px;
-      box-shadow: 0 0 60px rgba(34,139,34,1), inset 0 0 30px rgba(144,238,144,0.4);
-      border: 5px solid #228b22;
-      max-width: 90vw;
+      border-radius: 25px;
+      box-shadow: 0 0 40px rgba(34,139,34,0.9);
+      border: 3px solid #228b22;
+      max-width: 85vw;
       color: #ffffff;
-      text-shadow: 0 0 20px #228b22;
+      text-shadow: 0 0 12px #228b22;
     }
     #tally .live-label {
-      font-size: 2.2rem;
+      font-size: 1.6rem; /* Smaller label */
       display: block;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       color: #f0e68c;
-      text-shadow: 0 0 30px #228b22;
-      letter-spacing: 4px;
+      text-shadow: 0 0 20px #228b22;
+      letter-spacing: 2px;
     }
     #tally span {
       display: inline-block;
-      margin: 0 3rem;
-      padding: 1.5rem 3rem;
+      margin: 0 2rem;
+      padding: 1rem 2rem;
       background: rgba(144,238,144,0.4);
-      border-radius: 25px;
-      min-width: 300px;
-      font-size: 3rem;
-      box-shadow: 0 0 30px rgba(34,139,34,0.9);
+      border-radius: 20px;
+      min-width: 250px;
+      font-size: 2rem; /* Smaller numbers */
+      box-shadow: 0 0 20px rgba(34,139,34,0.8);
     }
     #list {
       max-width: 900px;
@@ -108,7 +108,7 @@
 
       const div = document.getElementById('list');
       div.innerHTML = votes.map((v, i) => `<p>${i+1}. ${v.choice} – ${new Date(v.timestamp).toLocaleString()}</p>`).join('');
-      if (votes.length === 0) div.innerHTML = "<p style='text-align:center; font-size:1.4rem;'>No votes yet — be the first to stand for Sovereignty.</p>";
+      if (votes.length === 0) div.innerHTML = "<p style='text-align:center; font-size:1.3rem;'>No votes yet — be the first to stand for Sovereignty.</p>";
     }
 
     loadLedger();
