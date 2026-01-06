@@ -7,92 +7,61 @@
     <script src="script.js" defer></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f9f9f9;
-            color: #333;
+            padding: 20px 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            background: url('https://images.unsplash.com/photo-1578662996442-48f60103fcbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
+            background-size: cover;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
         .header-banner {
-            background-color: #001f3f;
+            background-color: rgba(0, 31, 63, 0.9);
             color: #ffd700;
             text-align: center;
             padding: 12px 0;
             font-size: 1.3em;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            margin-bottom: 30px;
         }
         .ledger-container {
-            max-width: 900px;
-            margin: 0 auto;
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #ffd700;
         }
         h1 {
             text-align: center;
-            color: #d00;
-            font-size: 1.8em;
-        }
-        .ledger-info {
-            text-align: center;
-            font-style: italic;
-            color: #555;
-            margin-bottom: 30px;
+            color: #ffd700;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            background-color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            font-size: 0.95em;
+            font-size: 0.9em;
+            margin-top: 20px;
         }
         th, td {
-            border: 1px solid #001f3f;
-            padding: 12px;
+            border: 1px solid #ffd700;
+            padding: 10px;
             text-align: left;
         }
         th {
-            background-color: #001f3f;
+            background-color: rgba(0, 31, 63, 0.9);
             color: #ffd700;
-            position: sticky;
-            top: 0;
-        }
-        tr:nth-child(even) {
-            background-color: #f8f8f8;
         }
         .yes {
-            background-color: #e6ffe6 !important;
-            font-weight: bold;
-        }
-        .no {
-            background-color: #ffe6e6 !important;
-        }
-        .timestamp {
-            font-family: monospace;
-            font-size: 0.9em;
-            color: #555;
-        }
-        .vote-id {
-            font-family: monospace;
-            font-size: 0.85em;
-            color: #0066cc;
+            background-color: rgba(0, 80, 0, 0.6);
         }
         .back-link {
             text-align: center;
             margin-top: 40px;
-            font-size: 1.1em;
         }
         .back-link a {
-            color: #001f3f;
-            text-decoration: none;
+            color: #ffd700;
             font-weight: bold;
             margin: 0 15px;
-        }
-        .urgent {
-            text-align: center;
-            font-weight: bold;
-            color: #d00;
-            font-size: 1.3em;
-            margin: 20px 0;
         }
     </style>
 </head>
@@ -102,13 +71,8 @@
     </div>
 
     <div class="ledger-container">
-        <h1>LIVE PUBLIC LEDGER</h1>
-        <p class="urgent">TAMPER-PROOF • IMMUTABLE • PUBLIC • FOREVER</p>
-        <p class="ledger-info">
-            Every sovereign vote is permanently recorded below with timestamp and unique hash.<br>
-            This ledger simulates blockchain immutability using cryptographic hashing and local indexed storage.<br>
-            No vote can be altered or deleted. The people have spoken.
-        </p>
+        <h1>Live Public Ledger</h1>
+        <p style="text-align:center;">Secure storage via Supabase (future) • Currently client-side immutable simulation • January 06, 2026</p>
 
         <table id="ledger-table">
             <thead>
@@ -116,21 +80,19 @@
                     <th>Vote ID (Hash)</th>
                     <th>Timestamp</th>
                     <th>Living Name</th>
-                    <th>Region</th>
+                    <th>Town/City, Country</th>
                     <th>Vote</th>
                     <th>Public Statement</th>
                 </tr>
             </thead>
             <tbody id="ledger-body">
-                <!-- Votes will be injected here by script.js -->
+                <!-- Populated by script.js -->
             </tbody>
         </table>
     </div>
 
     <div class="back-link">
-        <a href="index.html">← Home</a> | 
-        <a href="voting.html">Register Vote</a> | 
-        <a href="doctrine.html">Full Doctrine</a>
+        <a href="index.html">← Home</a> | <a href="voting.html">Vote</a> | <a href="doctrine.html">Doctrine</a>
     </div>
 </body>
 </html>
