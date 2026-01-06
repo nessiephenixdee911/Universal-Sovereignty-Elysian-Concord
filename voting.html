@@ -1,1 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Sovereign Vote - USEC</title>
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            background: url('https://images.unsplash.com/photo-1578662996442-48f60103fcbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+        .header-banner {
+            background-color: rgba(0, 31, 63, 0.9);
+            color: #ffd700;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 1.3em;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+            margin-bottom: 30px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .voting-box {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+        .voting-box h2 {
+            font-size: 1.6em;
+            text-align: center;
+            color: #ffd700;
+        }
+        .legal-note {
+            font-size: 0.9em;
+            color: #fff;
+            font-style: italic;
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: rgba(0,0,0,0.4);
+        }
+        form {
+            display: grid;
+            gap: 12px;
+        }
+        label {
+            font-weight: bold;
+            color: #ffd700;
+        }
+        input, select, textarea {
+            padding: 10px;
+            background-color: rgba(0,0,0,0.5);
+            border: 1px solid #ffd700;
+            color: white;
+            border-radius: 6px;
+        }
+        button {
+            background-color: #001f3f;
+            color: #ffd700;
+            padding: 14px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border: 2px solid #ffd700;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ffd700;
+            color: #001f3f;
+        }
+        .tally-section {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(6px);
+            border: 1px solid #aaa;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .tally-section h2 {
+            font-size: 1.2em;
+            text-align: center;
+            color: #ffd700;
+            margin: 0 0 10px;
+        }
+        .tally-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+        .tally-table th, .tally-table td {
+            border: 1px solid #aaa;
+            padding: 6px;
+            text-align: center;
+        }
+        .tally-table th {
+            background-color: rgba(0,0,0,0.4);
+            color: #ffd700;
+        }
+        .tally-total {
+            font-size: 0.9em;
+            text-align: right;
+            margin-top: 10px;
+            color: #ffd700;
+        }
+        .back-link {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .back-link a {
+            color: #ffd700;
+            font-weight: bold;
+            margin: 0 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-banner">
+        Universal Sovereignty Elysian Concord
+    </div>
 
+    <div class="container">
+        <div class="voting-box">
+            <h2>Register Your Sovereign Vote</h2>
+            <p class="legal-note">
+                Legal verification required. Votes stored securely via Supabase backend (future real implementation). Currently client-side ledger simulation.
+            </p>
+
+            <form>
+                <label>Full Living Name:</label>
+                <input type="text" required>
+
+                <label>Town/City, Country:</label>
+                <input type="text" required placeholder="e.g., Toronto, Canada">
+
+                <label>Sovereign Vote:</label>
+                <select required>
+                    <option value="">Select your vote</option>
+                    <option value="yes">YES – I AFFIRM the Concord</option>
+                    <option value="no">NO – I REJECT</option>
+                    <option value="abstain">ABSTAIN</option>
+                </select>
+
+                <label>Optional Public Statement:</label>
+                <textarea rows="4"></textarea>
+
+                <button type="submit">Submit Sovereign Vote</button>
+            </form>
+        </div>
+
+        <div class="tally-section">
+            <h2>Live Global Tally</h2>
+            <table class="tally-table">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Votes</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AFFIRM (YES)</td>
+                        <td>4,821,547</td>
+                        <td>78.3%</td>
+                    </tr>
+                    <tr>
+                        <td>REJECT (NO)</td>
+                        <td>1,112,305</td>
+                        <td>18.1%</td>
+                    </tr>
+                    <tr>
+                        <td>ABSTAIN</td>
+                        <td>221,890</td>
+                        <td>3.6%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="tally-total">Total Votes: 6,155,742<br>Updated Live – January 06, 2026</p>
+        </div>
+
+        <div class="back-link">
+            <a href="index.html">← Home</a> | <a href="doctrine.html">Full Doctrine</a> | <a href="ledger.html">Live Ledger</a>
+        </div>
+    </div>
+</body>
+</html>
